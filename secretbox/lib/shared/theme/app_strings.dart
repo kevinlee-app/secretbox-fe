@@ -7,6 +7,7 @@ class AppStrings {
   static const String choosePrize = 'Please choose your prize!';
   static const String winPrize = 'Congratulation! You win ${AppStrings.prizeIdentifier}';
   static const String prizeIdentifier = '{{PRIZE}}';
+  static const String usernameIdentifier = '{{USERNAME}}';
   static const String inputVoucher = 'Input Voucher';
   static const String error = 'Error:';
   static const String playAgain = 'Play Again';

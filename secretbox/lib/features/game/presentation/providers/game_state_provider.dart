@@ -12,3 +12,5 @@ final gameStateNotifierProvider =
     });
 
 final voucherCodeProvider = StateProvider<String>((ref) => '');
+
+final audioProvider = StateProvider<bool>((ref) => true);

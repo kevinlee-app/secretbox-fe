@@ -35,4 +35,9 @@ class GameRepositoryImpl implements GameRepository {
   Future<Either<AppException, Setting>> getLocalSetting() async {
     return await settingRepository.fetchSetting();
   }
+
+  @override
+  Future<Either<AppException, bool>> openPrize(String code) async {
+    return await dataSource.openPrize(code);
+  }
 }

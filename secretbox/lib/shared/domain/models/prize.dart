@@ -1,5 +1,5 @@
 class Prize {
-  final String id;
+  final int id;
   final String name;
   final String imageUrl;
 
@@ -9,7 +9,7 @@ class Prize {
     return Prize(
       id: json['id'],
       name: json['name'],
-      imageUrl: json['image_url'],
+      imageUrl: json['image'],
     );
   }
 
@@ -17,7 +17,7 @@ class Prize {
     return {
       'id': id,
       'name': name,
-      'image_url': imageUrl,
+      'image': imageUrl,
     };
   }
 }

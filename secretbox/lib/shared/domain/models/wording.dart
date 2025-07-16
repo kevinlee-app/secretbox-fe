@@ -1,13 +1,22 @@
 import 'package:secretbox/shared/theme/app_strings.dart';
 
+// ignore: constant_identifier_names
+enum WordingType {
+  TEXT_WELCOME,
+  TEXT_SPINNING,
+  TEXT_CHOOSE_PRIZE,
+  TEXT_WINNING,
+}
+
 class Wording {
   final String welcomeText;
   final String spinningText;
   final String choosePrizeText;
   final String winningText;
 
-  String winningFullText(String prize) =>
-      winningText.replaceAll(AppStrings.prizeIdentifier, prize);
+  String winningFullText(String prize, String username) => winningText
+      .replaceAll(AppStrings.prizeIdentifier, prize)
+      .replaceAll(AppStrings.usernameIdentifier, username);
 
   Wording({
     required this.welcomeText,

@@ -1,15 +1,15 @@
 class Company {
-  final String id;
+  final int id;
   final String name;
-  final String logoUrl;
+  final String brandImageUrl;
 
-  Company({required this.id, required this.name, required this.logoUrl});
+  Company({required this.id, required this.name, required this.brandImageUrl});
 
   factory Company.fromJson(Map<String, dynamic> json) {
     return Company(
       id: json['id'],
       name: json['name'],
-      logoUrl: json['logo_url'],
+      brandImageUrl: json['brand_image'],
     );
   }
 
@@ -17,7 +17,7 @@ class Company {
     return {
       'id': id,
       'name': name,
-      'logo_url': logoUrl,
+      'brand_image': brandImageUrl,
     };
   }
 }

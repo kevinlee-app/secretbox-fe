@@ -45,6 +45,7 @@ dependencies:
   shared_preferences: ^2.0.17
   state_notifier: ^0.7.2+1
   cached_network_image: ^3.3.0
+  just_audio: ^0.9.38
 
 dev_dependencies:
   flutter_test:

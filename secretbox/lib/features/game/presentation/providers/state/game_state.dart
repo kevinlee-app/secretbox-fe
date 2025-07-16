@@ -19,5 +19,6 @@ abstract class GameState with _$GameState {
     required String countdownText,
     required Setting setting,
     Voucher? voucher,
+    String? error,
   }) = Success;
 }

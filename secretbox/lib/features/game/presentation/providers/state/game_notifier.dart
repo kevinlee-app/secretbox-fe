@@ -62,6 +62,7 @@ class GameNotifier extends StateNotifier<GameState> {
         countdownText,
         setting,
         voucher,
+        error,
       ) {
         setting.prizes.shuffle(Random());
 
@@ -91,6 +92,7 @@ class GameNotifier extends StateNotifier<GameState> {
         countdownText,
         setting,
         voucher,
+        error,
       ) {
         final newBoxStates = List<BoxState>.from(boxStates)
           ..[index] = BoxState.spinning;
@@ -122,6 +124,7 @@ class GameNotifier extends StateNotifier<GameState> {
             countdownText,
             setting,
             voucher,
+            error,
           ) {
             return GameState.success(
               revealed: revealed,
@@ -130,6 +133,7 @@ class GameNotifier extends StateNotifier<GameState> {
               countdownText:
                   '${setting.wording.spinningText} $secondsRemaining',
               setting: setting,
+              voucher: voucher,
             );
           },
           orElse: () => state,
@@ -145,6 +149,7 @@ class GameNotifier extends StateNotifier<GameState> {
             countdownText,
             setting,
             voucher,
+            error,
           ) {
             final updatedBoxStates = List<BoxState>.from(boxStates)
               ..[index] = BoxState.closed;
@@ -164,8 +169,8 @@ class GameNotifier extends StateNotifier<GameState> {
     });
   }
 
-  void revealPrize(int index) {
-    state = state.maybeWhen(
+  Future<void> revealPrize(int index) async {
+    state = await state.maybeWhen(
       success: (
         revealed,
         boxStates,
@@ -173,19 +178,38 @@ class GameNotifier extends StateNotifier<GameState> {
         countdownText,
         setting,
         voucher,
-      ) {
-        final updatedRevealed = List<bool>.from(revealed)..[index] = true;
+        error,
+      ) async {
+        final response = await gameRepository.openPrize(voucher?.code ?? '');
+        if (response.isRight()) {
+          final updatedRevealed = List<bool>.filled(revealed.length, true);
+          final winIndex =
+              voucher?.prizeId != null
+                  ? setting.prizes.indexWhere(
+                    (prize) => prize.id == voucher?.prizeId,
+                  )
+                  : index;
+          if (winIndex != index) {
+            final winPrize = setting.prizes[winIndex];
+            final swappedPrize = setting.prizes[index];
+            setting.prizes[index] = winPrize;
+            setting.prizes[winIndex] = swappedPrize;
+          }
 
-        return GameState.success(
-          revealed: updatedRevealed,
-          boxStates: boxStates,
-          gameplayState: GameplayState.finished,
-          countdownText: setting.wording.winningFullText(
-            setting.prizes[index].name,
-          ),
-          setting: setting,
-          voucher: voucher,
-        );
+          return GameState.success(
+            revealed: updatedRevealed,
+            boxStates: boxStates,
+            gameplayState: GameplayState.finished,
+            countdownText: setting.wording.winningFullText(
+              setting.prizes[index].name,
+              voucher?.username ?? '',
+            ),
+            setting: setting,
+            voucher: voucher,
+          );
+        } else {
+          return GameState.initial();
+        }
       },
       orElse: () => state,
     );
@@ -200,6 +224,7 @@ class GameNotifier extends StateNotifier<GameState> {
         countdownText,
         setting,
         voucher,
+        error,
       ) {
         return GameState.success(
           revealed: revealed,
@@ -214,7 +239,7 @@ class GameNotifier extends StateNotifier<GameState> {
     );
   }
 
-  void showVoucherInput() {
+  void showVoucherInput(bool shouldReset) {
     state = state.maybeWhen(
       success: (
         revealed,
@@ -223,7 +248,11 @@ class GameNotifier extends StateNotifier<GameState> {
         countdownText,
         setting,
         voucher,
+        error,
       ) {
+        if(shouldReset) {
+          setting.prizes.shuffle(Random());
+        }
         return _resetState(setting);
       },
       orElse: () => state,
@@ -239,10 +268,14 @@ class GameNotifier extends StateNotifier<GameState> {
 
       response.fold(
         (error) {
-          state = current.copyWith(gameplayState: GameplayState.waiting);
+          state = current.copyWith(
+            gameplayState: GameplayState.waiting,
+            error: error.message,
+          );
         },
         (voucher) {
           startGame(voucher);
+          print("NEW VOUCHER: ${voucher.prizeId}");
         },
       );
     }

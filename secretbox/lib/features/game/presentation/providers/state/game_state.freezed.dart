@@ -27,7 +27,8 @@ mixin _$GameState {
             GameplayState gameplayState,
             String countdownText,
             Setting setting,
-            Voucher? voucher)
+            Voucher? voucher,
+            String? error)
         success,
   }) =>
       throw _privateConstructorUsedError;
@@ -42,7 +43,8 @@ mixin _$GameState {
             GameplayState gameplayState,
             String countdownText,
             Setting setting,
-            Voucher? voucher)?
+            Voucher? voucher,
+            String? error)?
         success,
   }) =>
       throw _privateConstructorUsedError;
@@ -57,7 +59,8 @@ mixin _$GameState {
             GameplayState gameplayState,
             String countdownText,
             Setting setting,
-            Voucher? voucher)?
+            Voucher? voucher,
+            String? error)?
         success,
     required TResult orElse(),
   }) =>
@@ -159,7 +162,8 @@ class _$InitialImpl implements Initial {
             GameplayState gameplayState,
             String countdownText,
             Setting setting,
-            Voucher? voucher)
+            Voucher? voucher,
+            String? error)
         success,
   }) {
     return initial();
@@ -177,7 +181,8 @@ class _$InitialImpl implements Initial {
             GameplayState gameplayState,
             String countdownText,
             Setting setting,
-            Voucher? voucher)?
+            Voucher? voucher,
+            String? error)?
         success,
   }) {
     return initial?.call();
@@ -195,7 +200,8 @@ class _$InitialImpl implements Initial {
             GameplayState gameplayState,
             String countdownText,
             Setting setting,
-            Voucher? voucher)?
+            Voucher? voucher,
+            String? error)?
         success,
     required TResult orElse(),
   }) {
@@ -324,7 +330,8 @@ class _$LoadingImpl implements Loading {
             GameplayState gameplayState,
             String countdownText,
             Setting setting,
-            Voucher? voucher)
+            Voucher? voucher,
+            String? error)
         success,
   }) {
     return loading(setting);
@@ -342,7 +349,8 @@ class _$LoadingImpl implements Loading {
             GameplayState gameplayState,
             String countdownText,
             Setting setting,
-            Voucher? voucher)?
+            Voucher? voucher,
+            String? error)?
         success,
   }) {
     return loading?.call(setting);
@@ -360,7 +368,8 @@ class _$LoadingImpl implements Loading {
             GameplayState gameplayState,
             String countdownText,
             Setting setting,
-            Voucher? voucher)?
+            Voucher? voucher,
+            String? error)?
         success,
     required TResult orElse(),
   }) {
@@ -498,7 +507,8 @@ class _$FailureImpl implements Failure {
             GameplayState gameplayState,
             String countdownText,
             Setting setting,
-            Voucher? voucher)
+            Voucher? voucher,
+            String? error)
         success,
   }) {
     return failure(exception);
@@ -516,7 +526,8 @@ class _$FailureImpl implements Failure {
             GameplayState gameplayState,
             String countdownText,
             Setting setting,
-            Voucher? voucher)?
+            Voucher? voucher,
+            String? error)?
         success,
   }) {
     return failure?.call(exception);
@@ -534,7 +545,8 @@ class _$FailureImpl implements Failure {
             GameplayState gameplayState,
             String countdownText,
             Setting setting,
-            Voucher? voucher)?
+            Voucher? voucher,
+            String? error)?
         success,
     required TResult orElse(),
   }) {
@@ -606,7 +618,8 @@ abstract class _$$SuccessImplCopyWith<$Res> {
       GameplayState gameplayState,
       String countdownText,
       Setting setting,
-      Voucher? voucher});
+      Voucher? voucher,
+      String? error});
 }
 
 /// @nodoc
@@ -628,6 +641,7 @@ class __$$SuccessImplCopyWithImpl<$Res>
     Object? countdownText = null,
     Object? setting = null,
     Object? voucher = freezed,
+    Object? error = freezed,
   }) {
     return _then(_$SuccessImpl(
       revealed: null == revealed
@@ -654,6 +668,10 @@ class __$$SuccessImplCopyWithImpl<$Res>
           ? _value.voucher
           : voucher // ignore: cast_nullable_to_non_nullable
               as Voucher?,
+      error: freezed == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -667,7 +685,8 @@ class _$SuccessImpl implements Success {
       required this.gameplayState,
       required this.countdownText,
       required this.setting,
-      this.voucher})
+      this.voucher,
+      this.error})
       : _revealed = revealed,
         _boxStates = boxStates;
 
@@ -695,10 +714,12 @@ class _$SuccessImpl implements Success {
   final Setting setting;
   @override
   final Voucher? voucher;
+  @override
+  final String? error;
 
   @override
   String toString() {
-    return 'GameState.success(revealed: $revealed, boxStates: $boxStates, gameplayState: $gameplayState, countdownText: $countdownText, setting: $setting, voucher: $voucher)';
+    return 'GameState.success(revealed: $revealed, boxStates: $boxStates, gameplayState: $gameplayState, countdownText: $countdownText, setting: $setting, voucher: $voucher, error: $error)';
   }
 
   @override
@@ -714,7 +735,8 @@ class _$SuccessImpl implements Success {
             (identical(other.countdownText, countdownText) ||
                 other.countdownText == countdownText) &&
             (identical(other.setting, setting) || other.setting == setting) &&
-            (identical(other.voucher, voucher) || other.voucher == voucher));
+            (identical(other.voucher, voucher) || other.voucher == voucher) &&
+            (identical(other.error, error) || other.error == error));
   }
 
   @override
@@ -725,7 +747,8 @@ class _$SuccessImpl implements Success {
       gameplayState,
       countdownText,
       setting,
-      voucher);
+      voucher,
+      error);
 
   /// Create a copy of GameState
   /// with the given fields replaced by the non-null parameter values.
@@ -747,11 +770,12 @@ class _$SuccessImpl implements Success {
             GameplayState gameplayState,
             String countdownText,
             Setting setting,
-            Voucher? voucher)
+            Voucher? voucher,
+            String? error)
         success,
   }) {
-    return success(
-        revealed, boxStates, gameplayState, countdownText, setting, voucher);
+    return success(revealed, boxStates, gameplayState, countdownText, setting,
+        voucher, error);
   }
 
   @override
@@ -766,11 +790,12 @@ class _$SuccessImpl implements Success {
             GameplayState gameplayState,
             String countdownText,
             Setting setting,
-            Voucher? voucher)?
+            Voucher? voucher,
+            String? error)?
         success,
   }) {
-    return success?.call(
-        revealed, boxStates, gameplayState, countdownText, setting, voucher);
+    return success?.call(revealed, boxStates, gameplayState, countdownText,
+        setting, voucher, error);
   }
 
   @override
@@ -785,13 +810,14 @@ class _$SuccessImpl implements Success {
             GameplayState gameplayState,
             String countdownText,
             Setting setting,
-            Voucher? voucher)?
+            Voucher? voucher,
+            String? error)?
         success,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(
-          revealed, boxStates, gameplayState, countdownText, setting, voucher);
+      return success(revealed, boxStates, gameplayState, countdownText, setting,
+          voucher, error);
     }
     return orElse();
   }
@@ -841,7 +867,8 @@ abstract class Success implements GameState {
       required final GameplayState gameplayState,
       required final String countdownText,
       required final Setting setting,
-      final Voucher? voucher}) = _$SuccessImpl;
+      final Voucher? voucher,
+      final String? error}) = _$SuccessImpl;
 
   List<bool> get revealed;
   List<BoxState> get boxStates;
@@ -849,6 +876,7 @@ abstract class Success implements GameState {
   String get countdownText;
   Setting get setting;
   Voucher? get voucher;
+  String? get error;
 
   /// Create a copy of GameState
   /// with the given fields replaced by the non-null parameter values.
